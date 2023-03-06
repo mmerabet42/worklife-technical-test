@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "worklife-test"
+version = "0.2.0"
+description = ""
+authors = []
+
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.92.0"
+SQLAlchemy = "^1.4.36"
+uvicorn = "^0.20.0"
+pydantic = "^1.10.5"
+psycopg2-binary = "^2.9.3"
+alembic = "^1.9.4"
+pydantic-sqlalchemy = "^0.0.9"
+fastapi-utils = "^0.2.1"
+pytest = "^7.2.1"
+httpx = "^0.23.3"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.0.0"
+pytest-cov = "^3.0.0"
+pytest-mock = "^3.6.1"
+sqlalchemy-stubs = "^0.4"
