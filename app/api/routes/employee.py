@@ -10,10 +10,7 @@ import sqlalchemy as sa
 
 from app.db.session import get_db
 from app.repository.employee import EmployeeRepository
-from app.repository.vacation import VacationRepository
-from app.schema.employee import EmployeeSchema, EmployeeWithoutIdSchema
-from app.schema.vacation import VacationSchema
-from app.model.employee import EmployeeModel
+from app.schema.employee import EmployeeSchema, EmployeeWithoutIdSchema, EmployeeWithRelationshipSchema
 
 router = APIRouter()
 
@@ -27,17 +24,17 @@ def get_employees(session: sa.orm.Session = Depends(get_db)):
   return EmployeeRepository.get_many(session)
 
 
-@router.get("/{employee_id}", response_model=Optional[EmployeeSchema])
+@router.get("/{employee_id}", response_model=Optional[EmployeeWithRelationshipSchema])
 def get_employee(session: sa.orm.Session = Depends(get_db), *, employee_id: UUID):
-  return EmployeeRepository.get(session, id=employee_id)
+  return EmployeeRepository.get_by_id(session, employee_id)
 
 
-@router.post("/add", response_model=Optional[EmployeeSchema])
+@router.post("/", response_model=Optional[EmployeeSchema])
 def add_employee(session: sa.orm.Session = Depends(get_db), *, employee: EmployeeWithoutIdSchema):
   return EmployeeRepository.create(session, first_name=employee.first_name, last_name=employee.last_name)
 
 
-@router.post("/delete/{employee_id}", response_model=bool)
+@router.delete("/{employee_id}", response_model=bool)
 def delete_employee(session: sa.orm.Session = Depends(get_db), *, employee_id: UUID):
   if EmployeeRepository.delete(session, id=employee_id) is None:
     raise HTTPException(status_code=400, detail="unknown employee")

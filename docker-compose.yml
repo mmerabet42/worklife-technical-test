@@ -15,7 +15,7 @@ services:
     ports:
       - "880:80"
     env_file:
-      - app.env
+      - ./app.${ENV:-dev}.env
     environment:
       PYTHONPATH: /wl
     working_dir: /wl
@@ -38,7 +38,7 @@ services:
       - technical-db-data:/var/lib/postgresql/data/
       - ./scripts:/scripts/
     env_file:
-      - ./app.env
+      - ./app.${ENV:-dev}.env
     networks:
       - technical-backend
     ports:

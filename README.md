@@ -89,6 +89,10 @@ Stop the container:
 
 `make down`
 
+Create the databases, and migrate:
+
+`make create-db && make migrate-db && make ENV=test create-db && make ENV=test migrate-db`
+
 Run the tests:
 
 `make ENV=test test`

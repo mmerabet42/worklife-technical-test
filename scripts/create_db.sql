@@ -1,2 +1,1 @@
 CREATE DATABASE :db;
-CREATE DATABASE :db_test;

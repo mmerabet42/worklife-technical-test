@@ -1,8 +1,12 @@
+from uuid import UUID
 from sqlalchemy.orm import Session 
 
 class BaseRepository:
     def __init__(self, model):
         self.model = model
+
+    def get_by_id(self, session: Session, id: UUID):
+        return self.query(session, self.model.id == id).one_or_none()
 
     def _to_sa_filters(self, **kwargs):
         return [getattr(self.model, k) == v for k, v in kwargs.items()]
@@ -30,6 +34,9 @@ class BaseRepository:
             session.delete(obj)
             session.commit()
         return obj
+    
+    def here_on_here(self):
+        print("HELLO WORLD !")
     
     def delete_many(self, session: Session, *criterion, **kwargs):
         filters = self._to_sa_filters(**kwargs)
